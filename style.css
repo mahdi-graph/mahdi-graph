@@ -72,6 +72,10 @@ a {
   font-size: 14px;
 }
 
+.nav nav a {
+  transition: .3s;
+}
+
 .nav nav a:hover {
   color: #fff;
 }
@@ -540,6 +544,16 @@ a {
   opacity: 1;
 
   visibility: visible;
+
+  cursor: zoom-in;
+
+  transition:
+    transform .5s ease,
+    filter .5s ease;
+}
+
+.work:hover .art img {
+  transform: scale(1.03);
 }
 
 
@@ -753,57 +767,66 @@ footer {
 }
 
 
-/* ================= MODAL ================= */
+/* ================================================= */
+/* ================= IMAGE MODAL ================== */
+/* ================================================= */
 
 .modal {
   position: fixed;
 
-  z-index: 50;
+  z-index: 9999;
 
   inset: 0;
 
+  width: 100%;
+  height: 100%;
+
   background:
-    rgba(0, 0, 0, .85);
+    rgba(0, 0, 0, .90);
 
   backdrop-filter: blur(20px);
 
-  display: none;
+  -webkit-backdrop-filter: blur(20px);
+
+  display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   flex-direction: column;
 
-  padding: 30px;
+  padding: 25px;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition:
+    opacity .3s ease,
+    visibility .3s ease;
 }
 
-.modal.show {
-  display: flex;
+
+/* وقتی باز است */
+
+.modal.open {
+  opacity: 1;
+
+  visibility: visible;
+
+  pointer-events: auto;
 }
 
-.close {
-  position: absolute;
 
-  top: 25px;
-  right: 30px;
+/* ================= MODAL CONTENT ================= */
 
-  background: none;
+.modal-content {
+  width: 100%;
 
-  border: 0;
-
-  color: #fff;
-
-  font-size: 45px;
-
-  cursor: pointer;
-}
-
-.modal-art {
-  width: min(80vw, 700px);
-
-  height: min(70vh, 600px);
-
-  border-radius: 25px;
+  height: 100%;
 
   display: flex;
 
@@ -811,29 +834,154 @@ footer {
 
   justify-content: center;
 
-  overflow: hidden;
+  flex-direction: column;
+
+  position: relative;
 }
 
-.modal-art img {
-  max-width: 100%;
 
-  max-height: 100%;
+/* ================= CLOSE BUTTON ================= */
+
+.close {
+  position: fixed;
+
+  z-index: 10001;
+
+  top: 20px;
+  right: 25px;
+
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    rgba(255, 255, 255, .10);
+
+  border: 1px solid
+    rgba(255, 255, 255, .20);
+
+  border-radius: 50%;
+
+  color: #fff;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 38px;
+
+  font-weight: 300;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    .3s ease;
+}
+
+.close:hover {
+  background: #fff;
+
+  color: #000;
+
+  transform: rotate(90deg);
+}
+
+
+/* ================= MODAL IMAGE ================= */
+
+.modal-art {
+  width: min(90vw, 1100px);
+
+  height: min(82vh, 800px);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: visible;
+
+  position: relative;
+}
+
+
+/* عکس بزرگ */
+
+.modal-art img {
+  display: block;
 
   width: auto;
 
   height: auto;
 
+  max-width: 90vw;
+
+  max-height: 80vh;
+
   object-fit: contain;
 
-  border-radius: 20px;
+  border-radius: 14px;
 
-  display: block;
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, .75);
+
+  cursor: default;
+
+  animation:
+    modalImageIn .35s ease forwards;
 }
 
-.modal-title {
-  margin-top: 20px;
 
-  font-size: 22px;
+/* انیمیشن باز شدن */
+
+@keyframes modalImageIn {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      scale(.88);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      scale(1);
+
+  }
+
+}
+
+
+/* ================= MODAL TITLE ================= */
+
+.modal-title {
+  margin-top: 16px;
+
+  color: #fff;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  text-align: center;
+
+  max-width: 90vw;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
 }
 
 
@@ -975,6 +1123,44 @@ footer {
     gap: 15px;
 
     flex-direction: column;
+  }
+
+
+  /* ================= MOBILE MODAL ================= */
+
+  .modal {
+    padding: 15px;
+  }
+
+  .close {
+    top: 15px;
+
+    right: 15px;
+
+    width: 45px;
+    height: 45px;
+
+    font-size: 32px;
+  }
+
+  .modal-art {
+    width: 100%;
+
+    height: 80vh;
+  }
+
+  .modal-art img {
+    max-width: 94vw;
+
+    max-height: 78vh;
+
+    border-radius: 10px;
+  }
+
+  .modal-title {
+    font-size: 15px;
+
+    margin-top: 10px;
   }
 
   }
