@@ -166,7 +166,7 @@
 
 
 
-      <!-- FILTERS -->
+      <!-- ================= FILTERS ================= -->
 
       <div class="filters reveal">
 
@@ -200,250 +200,11 @@
 
 
 
-      <!-- ================= GALLERY ================= -->
+      <!-- ================= AUTO GALLERY ================= -->
 
       <div class="grid" id="gallery">
 
-
-        <!-- 01 -->
-
-        <article
-          class="work tall"
-          data-category="poster"
-          data-title="Mahdi Graph"
-        >
-
-          <div class="art">
-
-            <img
-              src="./Mahdi.png"
-              alt="نمونه کار Mahdi Graph"
-              loading="lazy"
-            >
-
-          </div>
-
-
-          <div class="work-info">
-
-            <span>
-              01 — POSTER
-            </span>
-
-            <b>
-              Mahdi Graph
-            </b>
-
-          </div>
-
-        </article>
-
-
-
-        <!-- 02 -->
-
-        <article
-          class="work"
-          data-category="gaming"
-          data-title="Gaming Design"
-        >
-
-          <div class="art art2">
-
-            <span>
-              VIVAN<br>
-              <b>CODM</b>
-            </span>
-
-          </div>
-
-
-          <div class="work-info">
-
-            <span>
-              02 — GAMING
-            </span>
-
-            <b>
-              Gaming Design
-            </b>
-
-          </div>
-
-        </article>
-
-
-
-        <!-- 03 -->
-
-        <article
-          class="work"
-          data-category="cover"
-          data-title="Social Cover"
-        >
-
-          <div class="art art3">
-
-            <span>
-              CREATE<br>
-              <b>MORE.</b>
-            </span>
-
-          </div>
-
-
-          <div class="work-info">
-
-            <span>
-              03 — COVER
-            </span>
-
-            <b>
-              Social Cover
-            </b>
-
-          </div>
-
-        </article>
-
-
-
-        <!-- 04 -->
-
-        <article
-          class="work wide"
-          data-category="logo"
-          data-title="Monogram Logo"
-        >
-
-          <div class="art art4">
-
-            <span>
-              MG
-            </span>
-
-          </div>
-
-
-          <div class="work-info">
-
-            <span>
-              04 — LOGO
-            </span>
-
-            <b>
-              Monogram
-            </b>
-
-          </div>
-
-        </article>
-
-
-
-        <!-- 05 -->
-
-        <article
-          class="work"
-          data-category="poster"
-          data-title="Future Poster"
-        >
-
-          <div class="art art5">
-
-            <span>
-              FUTURE<br>
-              <b>IS NOW</b>
-            </span>
-
-          </div>
-
-
-          <div class="work-info">
-
-            <span>
-              05 — POSTER
-            </span>
-
-            <b>
-              Future
-            </b>
-
-          </div>
-
-        </article>
-
-
-
-        <!-- 06 -->
-
-        <article
-          class="work tall"
-          data-category="gaming"
-          data-title="Night Gaming"
-        >
-
-          <div class="art art6">
-
-            <span>
-              NIGHT<br>
-              <b>MODE</b>
-            </span>
-
-          </div>
-
-
-          <div class="work-info">
-
-            <span>
-              06 — GAMING
-            </span>
-
-            <b>
-              Night Mode
-            </b>
-
-          </div>
-
-        </article>
-
-
-
-        <!-- ================================================= -->
-        <!-- 07 - MAHDI2.PNG -->
-        <!-- ================================================= -->
-
-        <article
-          class="work"
-          data-category="poster"
-          data-title="Mahdi 2"
-        >
-
-          <div class="art mahdi2-art">
-
-            <img
-              src="./Mahdi2.png"
-              alt="نمونه کار Mahdi 2"
-              loading="lazy"
-            >
-
-          </div>
-
-
-          <div class="work-info">
-
-            <span>
-              07 — POSTER
-            </span>
-
-            <b>
-              Mahdi 2
-            </b>
-
-          </div>
-
-        </article>
-
+        <!-- نمونه‌کارها به صورت خودکار اینجا قرار می‌گیرند -->
 
       </div>
 
@@ -692,10 +453,506 @@
 
 
 
-  <!-- ================= SCRIPT ================= -->
+  <!-- ================= AUTO GALLERY SCRIPT ================= -->
+
+  <script>
+
+    /*
+      ============================================
+      تنظیمات گالری خودکار
+      ============================================
+    */
+
+    const GITHUB_USER = "mahdi-graph";
+
+    const GITHUB_REPO = "mahdi-graph";
+
+    const IMAGE_FOLDER = "images";
+
+
+    /*
+      ============================================
+      گالری
+      ============================================
+    */
+
+    const gallery = document.getElementById("gallery");
+
+
+    /*
+      ============================================
+      نام دسته‌ها
+      ============================================
+    */
+
+    const categoryNames = {
+
+      poster: "POSTER",
+
+      cover: "COVER",
+
+      logo: "LOGO",
+
+      gaming: "GAMING"
+
+    };
+
+
+    /*
+      ============================================
+      دریافت عکس‌ها از GitHub
+      ============================================
+    */
+
+    async function loadWorks() {
+
+      try {
+
+        const apiURL =
+          `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${IMAGE_FOLDER}`;
+
+
+        const response = await fetch(apiURL);
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "GitHub repository یا پوشه images پیدا نشد."
+          );
+
+        }
+
+
+        const files = await response.json();
+
+
+        gallery.innerHTML = "";
+
+
+        /*
+          فقط فایل‌های تصویری
+        */
+
+        const images = files.filter(file => {
+
+          return /\.(jpg|jpeg|png|webp|gif)$/i.test(
+            file.name
+          );
+
+        });
+
+
+        /*
+          ساخت کارت‌های گالری
+        */
+
+        images.forEach((file, index) => {
+
+
+          /*
+            حذف پسوند
+          */
+
+          const cleanName =
+            file.name.replace(
+              /\.(jpg|jpeg|png|webp|gif)$/i,
+              ""
+            );
+
+
+          /*
+            جدا کردن دسته و عنوان
+
+            مثال:
+
+            cover-mahdi
+            poster-new
+            logo-mg
+            gaming-codm
+          */
+
+          const parts =
+            cleanName.split("-");
+
+
+          const category =
+            parts[0].toLowerCase();
+
+
+          const title =
+            parts
+              .slice(1)
+              .join(" ")
+              .replace(/_/g, " ")
+              .trim()
+              || cleanName;
+
+
+          /*
+            ساخت کارت
+          */
+
+          const article =
+            document.createElement("article");
+
+
+          article.className =
+            "work";
+
+
+          article.dataset.category =
+            categoryNames[category]
+              ? category
+              : "poster";
+
+
+          article.dataset.title =
+            title;
+
+
+          article.innerHTML = `
+
+            <div class="art">
+
+              <img
+                src="${file.download_url}"
+                alt="${title}"
+                loading="lazy"
+              >
+
+            </div>
+
+
+            <div class="work-info">
+
+              <span>
+
+                ${String(index + 1).padStart(2, "0")}
+
+                —
+
+                ${categoryNames[category] || "WORK"}
+
+              </span>
+
+
+              <b>
+                ${title}
+              </b>
+
+            </div>
+
+          `;
+
+
+          gallery.appendChild(article);
+
+
+        });
+
+
+        /*
+          اگر هیچ عکسی نبود
+        */
+
+        if (images.length === 0) {
+
+          gallery.innerHTML = `
+
+            <p style="
+              padding:30px;
+              opacity:.7;
+              grid-column:1/-1;
+            ">
+
+              هنوز نمونه‌کاری داخل پوشه images قرار نگرفته است.
+
+            </p>
+
+          `;
+
+        }
+
+
+        /*
+          اجرای فیلترها
+        */
+
+        setupFilters();
+
+
+        /*
+          اجرای باز شدن تصویر
+        */
+
+        setupModal();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        gallery.innerHTML = `
+
+          <p style="
+            padding:30px;
+            opacity:.7;
+            grid-column:1/-1;
+          ">
+
+            خطا در بارگذاری نمونه‌کارها.
+
+          </p>
+
+        `;
+
+      }
+
+    }
+
+
+
+    /*
+      ============================================
+      فیلتر دسته‌بندی
+      ============================================
+    */
+
+    function setupFilters() {
+
+
+      const buttons =
+        document.querySelectorAll(
+          ".filters button"
+        );
+
+
+      buttons.forEach(button => {
+
+
+        button.addEventListener(
+          "click",
+          () => {
+
+
+            /*
+              فعال کردن دکمه
+            */
+
+            buttons.forEach(btn => {
+
+              btn.classList.remove(
+                "active"
+              );
+
+            });
+
+
+            button.classList.add(
+              "active"
+            );
+
+
+            /*
+              فیلتر
+            */
+
+            const filter =
+              button.dataset.filter;
+
+
+            const works =
+              document.querySelectorAll(
+                "#gallery .work"
+              );
+
+
+            works.forEach(work => {
+
+
+              const category =
+                work.dataset.category;
+
+
+              if (
+                filter === "all" ||
+                category === filter
+              ) {
+
+                work.style.display =
+                  "";
+
+
+              } else {
+
+                work.style.display =
+                  "none";
+
+              }
+
+            });
+
+          }
+        );
+
+      });
+
+    }
+
+
+
+    /*
+      ============================================
+      باز شدن عکس بزرگ
+      ============================================
+    */
+
+    function setupModal() {
+
+
+      const modal =
+        document.getElementById("modal");
+
+
+      const modalArt =
+        document.getElementById("modalArt");
+
+
+      const modalTitle =
+        document.getElementById("modalTitle");
+
+
+      const close =
+        document.getElementById("close");
+
+
+      const works =
+        document.querySelectorAll(
+          "#gallery .work"
+        );
+
+
+      works.forEach(work => {
+
+
+        work.addEventListener(
+          "click",
+          () => {
+
+
+            const image =
+              work.querySelector("img");
+
+
+            if (!image) return;
+
+
+            modalArt.innerHTML = `
+
+              <img
+                src="${image.src}"
+                alt="${image.alt}"
+              >
+
+            `;
+
+
+            modalTitle.textContent =
+              work.dataset.title;
+
+
+            modal.classList.add(
+              "open"
+            );
+
+          }
+        );
+
+      });
+
+
+      /*
+        بستن
+      */
+
+      close.addEventListener(
+        "click",
+        () => {
+
+          modal.classList.remove(
+            "open"
+          );
+
+        }
+      );
+
+
+      /*
+        کلیک بیرون عکس
+      */
+
+      modal.addEventListener(
+        "click",
+        event => {
+
+
+          if (
+            event.target === modal
+          ) {
+
+            modal.classList.remove(
+              "open"
+            );
+
+          }
+
+        }
+      );
+
+
+      /*
+        بستن با ESC
+      */
+
+      document.addEventListener(
+        "keydown",
+        event => {
+
+
+          if (
+            event.key === "Escape"
+          ) {
+
+            modal.classList.remove(
+              "open"
+            );
+
+          }
+
+        }
+      );
+
+    }
+
+
+
+    /*
+      ============================================
+      اجرای سیستم
+      ============================================
+    */
+
+    loadWorks();
+
+  </script>
+
+
+  <!-- ================= ORIGINAL SCRIPT ================= -->
 
   <script src="./script.js"></script>
 
 </body>
 
-</html>
+  </html>
