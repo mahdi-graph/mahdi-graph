@@ -41,6 +41,7 @@ a {
 
   background: rgba(8, 9, 13, .65);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 
   border-bottom: 1px solid rgba(255, 255, 255, .08);
 }
@@ -160,7 +161,8 @@ a {
 
 .hero h1 em,
 .about h2 em,
-.contact h2 em {
+.contact h2 em,
+.offered-services h2 em {
   font-style: normal;
   color: #9b7cff;
 }
@@ -461,74 +463,6 @@ a {
 }
 
 
-/* ================= ART BACKGROUNDS ================= */
-
-.art1 {
-  background:
-    radial-gradient(
-      circle at 30% 20%,
-      #9b7cff,
-      #14121c 55%,
-      #050507
-    );
-}
-
-.art2 {
-  background:
-    linear-gradient(
-      140deg,
-      #ff4f8b,
-      #1c0734 55%,
-      #050507
-    );
-}
-
-.art3 {
-  background:
-    linear-gradient(
-      140deg,
-      #e8d8a0,
-      #665a32 35%,
-      #111
-    );
-}
-
-.art4 {
-  background:
-    linear-gradient(
-      135deg,
-      #111,
-      #292b39
-    );
-
-  font-size: 100px;
-}
-
-.art4 span {
-  font-size: 130px;
-}
-
-.art5 {
-  background:
-    linear-gradient(
-      140deg,
-      #62e6ff,
-      #162b5b 45%,
-      #07080d
-    );
-}
-
-.art6 {
-  background:
-    radial-gradient(
-      circle at 70% 25%,
-      #ed8b43,
-      #251314 35%,
-      #050506
-    );
-}
-
-
 /* ================= REAL IMAGES ================= */
 
 .art img {
@@ -557,7 +491,7 @@ a {
 }
 
 
-/* ================= MAHDI2 SPECIAL ================= */
+/* ================= MAHDI2 ================= */
 
 .work[data-title="Mahdi 2"] {
   display: block;
@@ -617,7 +551,9 @@ a {
 }
 
 
-/* ================= SERVICES ================= */
+/* ================================================= */
+/* =============== OLD SERVICES ==================== */
+/* ================================================= */
 
 .services {
   background: #0c0e14;
@@ -640,6 +576,15 @@ a {
   padding: 32px 0;
 
   border-bottom: 1px solid #292b35;
+
+  transition: .3s;
+}
+
+.service:hover {
+  padding-right: 12px;
+  padding-left: 12px;
+
+  background: rgba(155, 124, 255, .03);
 }
 
 .service span,
@@ -655,6 +600,107 @@ a {
 
 .service b {
   font-size: 25px;
+}
+
+
+/* ================================================= */
+/* ========== OFFERED SERVICES ===================== */
+/* ================================================= */
+
+.offered-services {
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(155, 124, 255, .08),
+      transparent 35%
+    ),
+    #090a0f;
+
+  border-top: 1px solid rgba(255,255,255,.04);
+
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+
+.offered-list {
+  border-top: 1px solid #292b35;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 50px;
+}
+
+.offered-item {
+  min-height: 95px;
+
+  display: grid;
+
+  grid-template-columns: 55px 1fr 30px;
+
+  align-items: center;
+
+  gap: 15px;
+
+  border-bottom: 1px solid #292b35;
+
+  transition:
+    background .3s ease,
+    padding .3s ease,
+    transform .3s ease;
+}
+
+.offered-item span {
+  color: #666b78;
+
+  font-size: 12px;
+
+  direction: ltr;
+}
+
+.offered-item h3 {
+  font-size: 19px;
+
+  font-weight: 700;
+
+  color: #f0f0f0;
+}
+
+.offered-item b {
+  font-size: 22px;
+
+  color: #9b7cff;
+
+  transition: .3s;
+}
+
+.offered-item:hover {
+  background: rgba(155, 124, 255, .055);
+
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.offered-item:hover b {
+  transform: translateX(-5px);
+}
+
+
+/* ================= WELCOME TEXT ================= */
+
+.offered-services .section-head > p {
+  padding: 18px 20px;
+
+  border: 1px solid #292b35;
+
+  border-radius: 15px;
+
+  background: rgba(255,255,255,.025);
+
+  box-shadow:
+    inset 0 0 30px rgba(155,124,255,.025);
 }
 
 
@@ -707,12 +753,20 @@ a {
 }
 
 
-/* ================= CONTACT ================= */
+/* ================================================= */
+/* ================= CONTACT ======================= */
+/* ================================================= */
 
 .contact {
   text-align: center;
 
-  background: #0b0d12;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(155, 124, 255, .08),
+      transparent 45%
+    ),
+    #0b0d12;
 }
 
 .contact h2 {
@@ -720,16 +774,76 @@ a {
 
   line-height: 1;
 
-  margin: 20px 0 45px;
+  margin: 20px 0 25px;
 }
 
-.contact-mail {
-  font-size: 22px;
 
-  border-bottom: 1px solid #777;
+/* متن ارتباط */
 
-  padding-bottom: 8px;
+.contact-text {
+  color: #858892;
+
+  max-width: 550px;
+
+  margin: 0 auto 35px;
+
+  line-height: 2;
 }
+
+
+/* شماره تلفن */
+
+.contact-phone {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  direction: ltr;
+
+  font-family: Arial, sans-serif;
+
+  font-size: clamp(25px, 4vw, 42px);
+
+  font-weight: 900;
+
+  color: #fff;
+
+  padding: 18px 30px;
+
+  border: 1px solid #363842;
+
+  border-radius: 100px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(155,124,255,.14),
+      rgba(255,255,255,.03)
+    );
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.35);
+
+  transition:
+    .35s ease;
+}
+
+.contact-phone:hover {
+  color: #08090d;
+
+  background: #fff;
+
+  border-color: #fff;
+
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 20px 70px rgba(155,124,255,.25);
+}
+
+
+/* لینک‌ها */
 
 .contact-links {
   margin-top: 50px;
@@ -743,6 +857,14 @@ a {
   color: #777;
 
   font-size: 13px;
+}
+
+.contact-links a {
+  transition: .3s;
+}
+
+.contact-links a:hover {
+  color: #fff;
 }
 
 
@@ -785,13 +907,11 @@ footer {
     rgba(0, 0, 0, .90);
 
   backdrop-filter: blur(20px);
-
   -webkit-backdrop-filter: blur(20px);
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   flex-direction: column;
@@ -809,9 +929,6 @@ footer {
     visibility .3s ease;
 }
 
-
-/* وقتی باز است */
-
 .modal.open {
   opacity: 1;
 
@@ -819,9 +936,6 @@ footer {
 
   pointer-events: auto;
 }
-
-
-/* ================= MODAL CONTENT ================= */
 
 .modal-content {
   width: 100%;
@@ -831,16 +945,12 @@ footer {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   flex-direction: column;
 
   position: relative;
 }
-
-
-/* ================= CLOSE BUTTON ================= */
 
 .close {
   position: fixed;
@@ -878,8 +988,7 @@ footer {
 
   cursor: pointer;
 
-  transition:
-    .3s ease;
+  transition: .3s ease;
 }
 
 .close:hover {
@@ -890,9 +999,6 @@ footer {
   transform: rotate(90deg);
 }
 
-
-/* ================= MODAL IMAGE ================= */
-
 .modal-art {
   width: min(90vw, 1100px);
 
@@ -901,7 +1007,6 @@ footer {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   overflow: visible;
@@ -909,18 +1014,13 @@ footer {
   position: relative;
 }
 
-
-/* عکس بزرگ */
-
 .modal-art img {
   display: block;
 
   width: auto;
-
   height: auto;
 
   max-width: 90vw;
-
   max-height: 80vh;
 
   object-fit: contain;
@@ -936,33 +1036,19 @@ footer {
     modalImageIn .35s ease forwards;
 }
 
-
-/* انیمیشن باز شدن */
-
 @keyframes modalImageIn {
 
   from {
-
     opacity: 0;
-
-    transform:
-      scale(.88);
-
+    transform: scale(.88);
   }
 
   to {
-
     opacity: 1;
-
-    transform:
-      scale(1);
-
+    transform: scale(1);
   }
 
 }
-
-
-/* ================= MODAL TITLE ================= */
 
 .modal-title {
   margin-top: 16px;
@@ -1028,7 +1114,9 @@ footer {
 }
 
 
-/* ================= MOBILE ================= */
+/* ================================================= */
+/* ================= MOBILE ======================== */
+/* ================================================= */
 
 @media (max-width: 800px) {
 
@@ -1046,6 +1134,9 @@ footer {
     padding: 9px 13px;
   }
 
+
+  /* HERO */
+
   .hero {
     grid-template-columns: 1fr;
 
@@ -1060,6 +1151,9 @@ footer {
     letter-spacing: -3px;
   }
 
+
+  /* SECTION */
+
   .section {
     padding: 80px 22px;
   }
@@ -1071,6 +1165,9 @@ footer {
   .section-head > p {
     margin-top: 20px;
   }
+
+
+  /* GALLERY */
 
   .grid {
     grid-template-columns: 1fr 1fr;
@@ -1096,6 +1193,9 @@ footer {
     font-size: 38px;
   }
 
+
+  /* OLD SERVICES */
+
   .service {
     grid-template-columns:
       35px 1fr 25px;
@@ -1105,6 +1205,41 @@ footer {
     display: none;
   }
 
+  .service h3 {
+    font-size: 20px;
+  }
+
+
+  /* OFFERED SERVICES */
+
+  .offered-list {
+    grid-template-columns: 1fr;
+
+    column-gap: 0;
+  }
+
+  .offered-item {
+    min-height: 78px;
+
+    grid-template-columns:
+      40px 1fr 25px;
+
+    gap: 10px;
+  }
+
+  .offered-item h3 {
+    font-size: 16px;
+  }
+
+  .offered-services .section-head > p {
+    font-size: 13px;
+
+    padding: 15px;
+  }
+
+
+  /* ABOUT */
+
   .about {
     grid-template-columns: 1fr;
   }
@@ -1113,9 +1248,27 @@ footer {
     height: 250px;
   }
 
+
+  /* CONTACT */
+
   .contact h2 {
     font-size: 58px;
   }
+
+  .contact-phone {
+    width: 100%;
+
+    font-size: 27px;
+
+    padding: 16px 18px;
+  }
+
+  .contact-text {
+    font-size: 14px;
+  }
+
+
+  /* FOOTER */
 
   footer {
     padding: 25px 22px;
@@ -1126,7 +1279,7 @@ footer {
   }
 
 
-  /* ================= MOBILE MODAL ================= */
+  /* MODAL */
 
   .modal {
     padding: 15px;
@@ -1163,4 +1316,4 @@ footer {
     margin-top: 10px;
   }
 
-  }
+}
