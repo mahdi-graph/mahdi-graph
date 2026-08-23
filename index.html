@@ -44,6 +44,7 @@
 
   </header>
 
+
   <main>
 
     <!-- HERO -->
@@ -81,6 +82,7 @@
 
       </div>
 
+
       <div class="hero-card reveal">
 
         <div class="orb orb1"></div>
@@ -104,11 +106,13 @@
 
       </div>
 
+
       <div class="scroll">
         SCROLL ↓
       </div>
 
     </section>
+
 
     <!-- WORKS -->
 
@@ -133,6 +137,7 @@
         </p>
 
       </div>
+
 
       <!-- FILTERS -->
 
@@ -160,22 +165,26 @@
 
       </div>
 
+
       <!-- GALLERY -->
 
       <div class="grid" id="gallery">
 
-        <p id="gallery-loading"
-           style="
-             padding:30px;
-             opacity:.7;
-             grid-column:1/-1;
-           ">
+        <p
+          id="gallery-loading"
+          style="
+            padding:30px;
+            opacity:.7;
+            grid-column:1/-1;
+          "
+        >
           در حال بارگذاری نمونه‌کارها...
         </p>
 
       </div>
 
     </section>
+
 
     <!-- SERVICES -->
 
@@ -197,6 +206,7 @@
 
       </div>
 
+
       <div class="service-list">
 
         <div class="service reveal">
@@ -215,6 +225,7 @@
 
         </div>
 
+
         <div class="service reveal">
 
           <span>02</span>
@@ -231,6 +242,7 @@
 
         </div>
 
+
         <div class="service reveal">
 
           <span>03</span>
@@ -246,6 +258,7 @@
           <b>↗</b>
 
         </div>
+
 
         <div class="service reveal">
 
@@ -266,6 +279,7 @@
       </div>
 
     </section>
+
 
     <!-- ABOUT -->
 
@@ -294,6 +308,7 @@
       </div>
 
     </section>
+
 
     <!-- CONTACT -->
 
@@ -335,6 +350,7 @@
 
   </main>
 
+
   <!-- FOOTER -->
 
   <footer>
@@ -349,31 +365,46 @@
 
   </footer>
 
-  <!-- MODAL -->
 
-  <div class="modal" id="modal">
+  <!-- IMAGE MODAL -->
+
+  <div
+    class="modal"
+    id="modal"
+    aria-hidden="true"
+  >
 
     <button
       class="close"
       id="close"
       type="button"
+      aria-label="بستن"
     >
       ×
     </button>
 
-    <div
-      class="modal-art"
-      id="modalArt"
-    ></div>
 
     <div
-      class="modal-title"
-      id="modalTitle"
-    ></div>
+      class="modal-content"
+      id="modalContent"
+    >
+
+      <div
+        class="modal-art"
+        id="modalArt"
+      ></div>
+
+      <div
+        class="modal-title"
+        id="modalTitle"
+      ></div>
+
+    </div>
 
   </div>
 
-  <!-- AUTO GALLERY -->
+
+  <!-- GALLERY SCRIPT -->
 
   <script>
 
@@ -381,40 +412,44 @@
     const GITHUB_REPO = "mahdi-graph";
     const IMAGE_FOLDER = "images";
 
-    const gallery = document.getElementById("gallery");
+    const gallery =
+      document.getElementById("gallery");
+
 
     /*
-      دسته‌بندی
+      دسته‌بندی‌ها
     */
 
     const categoryNames = {
+
       poster: "POSTER",
       cover: "COVER",
       logo: "LOGO",
       gaming: "GAMING"
+
     };
 
 
     /*
-      تبدیل نام فایل به اطلاعات
+      اطلاعات تصویر
     */
 
     function getImageInfo(filename) {
 
-      const cleanName = filename
-        .replace(
+      const cleanName =
+        filename.replace(
           /\.(jpg|jpeg|png|webp|gif)$/i,
           ""
         );
 
-      const parts = cleanName.split("-");
 
-      let category = parts[0].toLowerCase();
+      const parts =
+        cleanName.split("-");
 
-      /*
-        اگر دسته معتبر نبود
-        به صورت پیش‌فرض پوستر
-      */
+
+      let category =
+        parts[0].toLowerCase();
+
 
       if (!categoryNames[category]) {
 
@@ -422,17 +457,18 @@
 
       }
 
-      /*
-        عنوان
-      */
 
       let title;
 
-      if (categoryNames[parts[0].toLowerCase()]) {
 
-        title = parts
-          .slice(1)
-          .join(" ");
+      if (
+        categoryNames[
+          parts[0].toLowerCase()
+        ]
+      ) {
+
+        title =
+          parts.slice(1).join(" ");
 
       } else {
 
@@ -440,9 +476,12 @@
 
       }
 
-      title = title
-        .replace(/_/g, " ")
-        .trim();
+
+      title =
+        title
+          .replace(/_/g, " ")
+          .trim();
+
 
       if (!title) {
 
@@ -450,9 +489,12 @@
 
       }
 
+
       return {
+
         category,
         title
+
       };
 
     }
@@ -469,10 +511,15 @@
         const apiURL =
           `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${IMAGE_FOLDER}?v=${Date.now()}`;
 
+
         const response =
-          await fetch(apiURL, {
-            cache: "no-store"
-          });
+          await fetch(
+            apiURL,
+            {
+              cache: "no-store"
+            }
+          );
+
 
         if (!response.ok) {
 
@@ -482,32 +529,36 @@
 
         }
 
+
         const files =
           await response.json();
 
-        /*
-          فقط تصاویر
-        */
 
         const images =
           files.filter(file => {
 
             return (
+
               file.type === "file" &&
+
               /\.(jpg|jpeg|png|webp|gif)$/i.test(
                 file.name
               )
+
             );
 
           });
 
+
         gallery.innerHTML = "";
 
+
         /*
-          مرتب‌سازی
+          مرتب‌سازی تصاویر
         */
 
         images.sort((a, b) =>
+
           a.name.localeCompare(
             b.name,
             undefined,
@@ -516,78 +567,98 @@
               sensitivity: "base"
             }
           )
+
         );
 
 
         /*
-          ساخت کارت‌ها
+          ساخت کارت تصاویر
         */
 
-        images.forEach((file, index) => {
+        images.forEach(
+          (file, index) => {
 
-          const info =
-            getImageInfo(file.name);
+            const info =
+              getImageInfo(
+                file.name
+              );
 
-          const article =
-            document.createElement("article");
 
-          article.className =
-            "work";
+            const article =
+              document.createElement(
+                "article"
+              );
 
-          article.dataset.category =
-            info.category;
 
-          article.dataset.title =
-            info.title;
+            article.className =
+              "work";
 
-          article.innerHTML = `
 
-            <div class="art">
+            article.dataset.category =
+              info.category;
 
-              <img
-                src="${file.download_url}"
-                alt="${info.title}"
-                loading="lazy"
-              >
 
-            </div>
+            article.dataset.title =
+              info.title;
 
-            <div class="work-info">
 
-              <span>
-                ${String(index + 1).padStart(2, "0")}
-                —
-                ${categoryNames[info.category]}
-              </span>
+            article.innerHTML = `
 
-              <b>
-                ${info.title}
-              </b>
+              <div class="art">
 
-            </div>
+                <img
+                  src="${file.download_url}"
+                  alt="${info.title}"
+                  loading="lazy"
+                >
 
-          `;
+              </div>
 
-          gallery.appendChild(article);
+              <div class="work-info">
 
-        });
+                <span>
+
+                  ${String(index + 1).padStart(2, "0")}
+                  —
+                  ${categoryNames[info.category]}
+
+                </span>
+
+                <b>
+                  ${info.title}
+                </b>
+
+              </div>
+
+            `;
+
+
+            gallery.appendChild(
+              article
+            );
+
+          }
+        );
 
 
         /*
-          اگر تصویری نبود
+          اگر عکس وجود نداشت
         */
 
         if (images.length === 0) {
 
           gallery.innerHTML = `
 
-            <p style="
-              padding:30px;
-              opacity:.7;
-              grid-column:1/-1;
-            ">
+            <p
+              style="
+                padding:30px;
+                opacity:.7;
+                grid-column:1/-1;
+              "
+            >
 
-              هنوز تصویری داخل پوشه images قرار نگرفته است.
+              هنوز تصویری داخل پوشه
+              images قرار نگرفته است.
 
             </p>
 
@@ -597,6 +668,7 @@
 
 
         setupFilters();
+
         setupModal();
 
 
@@ -607,13 +679,16 @@
           error
         );
 
+
         gallery.innerHTML = `
 
-          <p style="
-            padding:30px;
-            opacity:.7;
-            grid-column:1/-1;
-          ">
+          <p
+            style="
+              padding:30px;
+              opacity:.7;
+              grid-column:1/-1;
+            "
+          >
 
             خطا در بارگذاری نمونه‌کارها.
 
@@ -637,126 +712,171 @@
           ".filters button"
         );
 
-      buttons.forEach(button => {
 
-        button.addEventListener(
-          "click",
-          () => {
+      buttons.forEach(
+        button => {
 
-            buttons.forEach(btn => {
+          button.addEventListener(
+            "click",
+            () => {
 
-              btn.classList.remove(
+              buttons.forEach(
+                btn => {
+
+                  btn.classList.remove(
+                    "active"
+                  );
+
+                }
+              );
+
+
+              button.classList.add(
                 "active"
               );
 
-            });
 
-            button.classList.add(
-              "active"
-            );
+              const filter =
+                button.dataset.filter;
 
-            const filter =
-              button.dataset.filter;
 
-            const works =
-              document.querySelectorAll(
-                "#gallery .work"
+              const works =
+                document.querySelectorAll(
+                  "#gallery .work"
+                );
+
+
+              works.forEach(
+                work => {
+
+                  const category =
+                    work.dataset.category;
+
+
+                  if (
+                    filter === "all" ||
+                    category === filter
+                  ) {
+
+                    work.style.display =
+                      "";
+
+                  } else {
+
+                    work.style.display =
+                      "none";
+
+                  }
+
+                }
               );
 
-            works.forEach(work => {
+            }
+          );
 
-              const category =
-                work.dataset.category;
-
-              if (
-                filter === "all" ||
-                category === filter
-              ) {
-
-                work.style.display = "";
-
-              } else {
-
-                work.style.display = "none";
-
-              }
-
-            });
-
-          }
-        );
-
-      });
+        }
+      );
 
     }
 
 
     /*
-      باز کردن عکس
+      سیستم باز شدن عکس
     */
 
     function setupModal() {
 
       const modal =
-        document.getElementById("modal");
+        document.getElementById(
+          "modal"
+        );
+
 
       const modalArt =
-        document.getElementById("modalArt");
+        document.getElementById(
+          "modalArt"
+        );
+
 
       const modalTitle =
-        document.getElementById("modalTitle");
+        document.getElementById(
+          "modalTitle"
+        );
+
 
       const close =
-        document.getElementById("close");
+        document.getElementById(
+          "close"
+        );
+
 
       const works =
         document.querySelectorAll(
           "#gallery .work"
         );
 
-      works.forEach(work => {
-
-        work.addEventListener(
-          "click",
-          () => {
-
-            const image =
-              work.querySelector("img");
-
-            if (!image) return;
-
-            modalArt.innerHTML = `
-
-              <img
-                src="${image.src}"
-                alt="${image.alt}"
-              >
-
-            `;
-
-            modalTitle.textContent =
-              work.dataset.title;
-
-            modal.classList.add(
-              "open"
-            );
-
-          }
-        );
-
-      });
-
 
       /*
-        بستن
+        کلیک روی هر نمونه‌کار
       */
 
-      close.addEventListener(
-        "click",
-        () => {
+      works.forEach(
+        work => {
 
-          modal.classList.remove(
-            "open"
+          work.addEventListener(
+            "click",
+            () => {
+
+              const image =
+                work.querySelector(
+                  "img"
+                );
+
+
+              if (!image) return;
+
+
+              /*
+                قرار دادن تصویر بزرگ
+              */
+
+              modalArt.innerHTML = `
+
+                <img
+                  src="${image.src}"
+                  alt="${image.alt}"
+                >
+
+              `;
+
+
+              modalTitle.textContent =
+                work.dataset.title;
+
+
+              /*
+                نمایش مودال
+              */
+
+              modal.classList.add(
+                "open"
+              );
+
+
+              modal.setAttribute(
+                "aria-hidden",
+                "false"
+              );
+
+
+              /*
+                جلوگیری از اسکرول صفحه
+              */
+
+              document.body.style.overflow =
+                "hidden";
+
+            }
           );
 
         }
@@ -764,7 +884,17 @@
 
 
       /*
-        کلیک بیرون
+        بستن با X
+      */
+
+      close.addEventListener(
+        "click",
+        closeModal
+      );
+
+
+      /*
+        بستن با کلیک بیرون عکس
       */
 
       modal.addEventListener(
@@ -772,12 +902,11 @@
         event => {
 
           if (
-            event.target === modal
+            event.target === modal ||
+            event.target === modalArt
           ) {
 
-            modal.classList.remove(
-              "open"
-            );
+            closeModal();
 
           }
 
@@ -786,7 +915,7 @@
 
 
       /*
-        ESC
+        بستن با ESC
       */
 
       document.addEventListener(
@@ -797,28 +926,54 @@
             event.key === "Escape"
           ) {
 
-            modal.classList.remove(
-              "open"
-            );
+            closeModal();
 
           }
 
         }
       );
 
+
+      /*
+        تابع بستن
+      */
+
+      function closeModal() {
+
+        modal.classList.remove(
+          "open"
+        );
+
+
+        modal.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+
+        modalArt.innerHTML =
+          "";
+
+
+        document.body.style.overflow =
+          "";
+
+      }
+
     }
 
 
     /*
-      شروع
+      شروع سایت
     */
 
     loadWorks();
 
   </script>
 
+
   <script src="./script.js"></script>
 
 </body>
 
-        </html>
+</html>
